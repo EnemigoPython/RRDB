@@ -5,11 +5,12 @@ from dotenv import load_dotenv
 from argparse import ArgumentParser
 
 def sql_query(text: str, *params):
-    """A generic function to execute a query"""
-    cur = con.cursor()
-    res = cur.execute(text, params)
-    con.commit()
-    return list(res)
+    """A generic function to execute a SQL query on the SQLite DB in scope"""
+    con = sqlite3.connect(os.getenv('DB_PATH'))
+    with con:
+        res = list(con.execute(text, params))
+    con.close()
+    return res
 
 def init(*_):
     """Constructs an empty RRDB"""
@@ -35,8 +36,8 @@ def drop(*_):
 
 def _save_hour():
     current_hours, max_hours = sql_query("SELECT current,length FROM rrdb_master WHERE name='hours'")[0]
-    min_value = min(i[0] for i in sql_query("SELECT value FROM rrdb_minutes"))
-    sql_query("UPDATE rrdb_minutes SET value=? WHERE slot=?", min_value, current_hours)
+    min_value, min_epoch = min(i[0] for i in sql_query("SELECT value,epoch FROM rrdb_minutes"))
+    sql_query("UPDATE rrdb_hours SET value=?, epoch=? WHERE slot=?", min_value, min_epoch, current_hours)
     if current_hours == max_hours:
         sql_query("UPDATE rrdb_master SET current=1 WHERE name='hours'")
     else:
@@ -47,7 +48,7 @@ def save(namespace):
     epoch, value = namespace.epoch, namespace.value
     assert epoch > 0, 'Invalid epoch value'
     current_minutes, max_minutes = sql_query("SELECT current,length FROM rrdb_master WHERE name='minutes'")[0]
-    sql_query("UPDATE rrdb_minutes SET value=? WHERE slot=?", value, current_minutes)
+    sql_query("UPDATE rrdb_minutes SET value=?, epoch=? WHERE slot=?", value, epoch, current_minutes)
     sql_query("UPDATE rrdb_master SET current=? WHERE name='minutes'", current_minutes)
     if current_minutes == max_minutes:
         _save_hour()
@@ -71,7 +72,6 @@ def query(namespace):
 
 def main():
     load_dotenv()
-    global con
     con = sqlite3.connect(os.getenv('DB_PATH'))
     parser = ArgumentParser(prog='RRDB')
     subparsers = parser.add_subparsers(dest='cmd {init,save,query}')

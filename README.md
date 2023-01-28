@@ -20,15 +20,19 @@ i.e. `valueOnHour1 = min(valueOnMinute0, valueOnMinute1, valueOnMinute2, ..., va
 and minimum values.
     - `rrd query minutes`. Example output:
 
-```1345018980, 132.1
+```
+1345018980, 132.1
 1345019040, 322.1
 1345019160, NULL
 ...
 1345022580, 53.3
-minutes: min: 53.3, avg: 403.3, max: 512.11```
+minutes: min: 53.3, avg: 403.3, max: 512.11
+```
 - `rrd query hours`. Example output:
-```1345021200, 132.1
+```
+1345021200, 132.1
 1345024800, 122.1
 ...
 1345028400, 453.3
-hours: min: 53.3, avg: 403.3, max: 512.11```
+hours: min: 53.3, avg: 403.3, max: 512.11
+```
