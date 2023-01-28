@@ -25,9 +25,9 @@ and minimum values.
 1345019160, NULL
 ...
 1345022580, 53.3
-minutes: min: 53.3, avg: 403.3, max: 512.11`
-- rrd query hours. Example output:
-`1345021200, 132.1
+minutes: min: 53.3, avg: 403.3, max: 512.11```
+- `rrd query hours`. Example output:
+```1345021200, 132.1
 1345024800, 122.1
 ...
 1345028400, 453.3
