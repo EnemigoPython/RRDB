@@ -41,7 +41,7 @@ def _save_hour():
     if current_hours == max_hours:
         sql_query("UPDATE rrdb_master SET current=1 WHERE name='hours'")
     else:
-        sql_query("UPDATE rrdb_master SET current=? WHERE name='minutes'", current_hours + 1)
+        sql_query("UPDATE rrdb_master SET current=? WHERE name='hours'", current_hours + 1)
 
 def save(namespace):
     """Saves an epoch timestamp and a float value to the RRDB"""

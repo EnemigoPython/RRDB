@@ -48,8 +48,9 @@ def test_save_bulk():
     assert minute_values[0] == 3.1
     first_hour = rrdb.sql_query("SELECT value FROM rrdb_hours")[0][0]
     assert first_hour == 3.0
-    for _ in range(24):
+    for _ in range(25):
         for _ in range(60):
             rrdb.save(Namespace(epoch=_time(), value=9.2))
     hour_values = rrdb.sql_query("SELECT value FROM rrdb_hours")
     assert hour_values[0][0] == 9.2
+    assert len(set(i[0] for i in hour_values)) == 1

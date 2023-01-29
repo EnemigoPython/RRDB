@@ -1,6 +1,6 @@
 # Round Robin Database
 ## Note
-I have started writing with the cmd command (and general abbreviation) RRDB, and that is what I will call it! Because... idk.
+I have started writing with the command name (and general abbreviation) RRDB, and that is what I will call it! Because... idk.
 ## Prompt
 Requirements for a Round Robin Database tool (RRD)
 - An RRD is a circular structure (list) with a fixed number of slots to store data.
