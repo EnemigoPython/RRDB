@@ -1,4 +1,7 @@
 # Round Robin Database
+## Note
+I have started writing with the cmd command (and general abbreviation) RRDB, and that is what I will call it! Because... idk.
+## Prompt
 Requirements for a Round Robin Database tool (RRD)
 - An RRD is a circular structure (list) with a fixed number of slots to store data.
 - It is filled in order, and once you reach the end of the list, the first element gets overwritten. This
@@ -28,7 +31,7 @@ and minimum values.
 1345022580, 53.3
 minutes: min: 53.3, avg: 403.3, max: 512.11
 ```
-- `rrd query hours`. Example output:
+    - `rrd query hours`. Example output:
 ```
 1345021200, 132.1
 1345024800, 122.1

@@ -36,7 +36,7 @@ def drop(*_):
 
 def _save_hour():
     current_hours, max_hours = sql_query("SELECT current,length FROM rrdb_master WHERE name='hours'")[0]
-    min_value, min_epoch = min(i[0] for i in sql_query("SELECT value,epoch FROM rrdb_minutes"))
+    min_value, min_epoch = min(sql_query("SELECT value,epoch FROM rrdb_minutes"), key=lambda x: x[0])
     sql_query("UPDATE rrdb_hours SET value=?, epoch=? WHERE slot=?", min_value, min_epoch, current_hours)
     if current_hours == max_hours:
         sql_query("UPDATE rrdb_master SET current=1 WHERE name='hours'")
